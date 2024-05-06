@@ -11,7 +11,16 @@ public class PlayerMove : MonoBehaviour
     private Animator animator;
     private BoxCollider2D boxCollider;
 
+    public CoinManager cm;
    
+   void OnTriggerEnter2D(Collider2D other)
+   {
+        if(other.gameObject.CompareTag("Coin"));
+        {
+            Destroy(other.gameObject);
+            cm.coinCount++;
+        }
+   }
     void Start()
     {
         //Grab references for rigidbody and animator from object
@@ -53,4 +62,6 @@ public class PlayerMove : MonoBehaviour
         RaycastHit2D raycastHit=Physics2D.BoxCast(boxCollider.bounds.center,boxCollider.bounds.size,0,new Vector2(transform.localScale.x,0),0.1f,wallLayer);
         return raycastHit.collider!=null;
     }
+
+    
 }
