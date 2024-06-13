@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed; 
@@ -12,13 +11,24 @@ public class PlayerMove : MonoBehaviour
     private BoxCollider2D boxCollider;
 
     public CoinManager cm;
-   
+    
+
+   IEnumerator Respawn(Collider2D collision,int time)
+   {
+    yield return new WaitForSeconds(time);
+    collision.gameObject.SetActive(true);
+   }
    void OnTriggerEnter2D(Collider2D other)
    {
+    
         if(other.gameObject.CompareTag("Coin"));
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
             cm.coinCount++;
+
+            
+            StartCoroutine(Respawn(other,2));
         }
    }
     void Start()
@@ -36,9 +46,10 @@ public class PlayerMove : MonoBehaviour
         
         // for changing sprite direction when moving left and right
         if(horizontalInput>0.1f)
-        transform.localScale=Vector3.one;
+        //transform.localScale=Vector3.one;
+        transform.localScale=new Vector3(1.5f,1.5f,1);
         else if(horizontalInput<-0.1f)
-        transform.localScale=new Vector3(-1,1,1);
+        transform.localScale=new Vector3(-1.5f,1.5f,1);
 
         body.velocity=new Vector2(Input.GetAxis("Horizontal")*speed,body.velocity.y);
 
