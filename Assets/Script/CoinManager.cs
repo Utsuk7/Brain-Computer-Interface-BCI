@@ -7,11 +7,11 @@ public class CoinManager : MonoBehaviour
     // Start is called before the first frame update
     public int coinCount;
     public Text coinText;
-    void Start()
+    /*void Start()
     {
         
     }
-
+*/
     // Update is called once per frame
     void Update()
     {
